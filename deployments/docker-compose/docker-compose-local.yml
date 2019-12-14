@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  pscheckout-go:
+    container_name: pscheckout
+    image: p1hub/pscheckout:${TAG}
+    command: ["http","-c","configs/local.yaml","-b",":3001","-d"]
+    networks:
+      - default
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      HTTP_SCHEME: http
+      MICRO_REGISTRY: consul
+      MICRO_REGISTRY_ADDRESS: consul
+      PAYMENT_FORM_JS_LIBRARY_URL: "unknown"
+      ORDER_INLINE_FORM_URL_MASK: "unknown"
+volumes:
+  payone-mongo:

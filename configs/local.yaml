@@ -1,0 +1,8 @@
+http:
+  bind: :3001
+micro:
+  selector: static
+  name: pscheckout
+dispatcher:
+  global:
+    paymentFormJsLibraryUrl: "unknown"

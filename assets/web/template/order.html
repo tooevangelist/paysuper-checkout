@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<div id="p1payone-form"></div>
+<script>
+    window.PAYSUPER_FORM_DATA = {{ Marshal .Order }};
+    window.PAYSUPER_WEBSOCKET_URL = {{ .WebSocketUrl }};
+</script>
+<script src="{{ .PaymentFormJsLibraryUrl }}"></script>
+</body>
+
+</html>
