@@ -21,14 +21,14 @@ func NewValidationError(details string) *grpc.ResponseErrorMessage {
 }
 
 var (
-	ErrorUnknown                       = NewManagementApiResponseError("ma000001", "unknown error. try request later")
-	ErrorValidationFailed              = NewManagementApiResponseError("ma000002", "validation failed")
-	ErrorInternal                      = NewManagementApiResponseError("ma000003", InternalErrorTemplate)
-	ErrorIncorrectOrderId              = NewManagementApiResponseError("ma000008", "incorrect order identifier")
-	ErrorMessageSignatureHeaderIsEmpty = NewManagementApiResponseError("ma000022", "header with request signature can't be empty")
-	ErrorRequestParamsIncorrect        = NewManagementApiResponseError("ma000023", "incorrect request parameters")
-	ErrorRequestDataInvalid            = NewManagementApiResponseError("ma000026", "request data invalid")
-	ErrorMessageIncorrectZip           = NewManagementApiResponseError("ma000073", "incorrect zip code")
+	ErrorUnknown                       = NewManagementApiResponseError("co000001", "unknown error. try request later")
+	ErrorValidationFailed              = NewManagementApiResponseError("co000002", "validation failed")
+	ErrorInternal                      = NewManagementApiResponseError("co000003", InternalErrorTemplate)
+	ErrorIncorrectOrderId              = NewManagementApiResponseError("co000004", "incorrect order identifier")
+	ErrorMessageSignatureHeaderIsEmpty = NewManagementApiResponseError("co000005", "header with request signature can't be empty")
+	ErrorRequestParamsIncorrect        = NewManagementApiResponseError("co000006", "incorrect request parameters")
+	ErrorRequestDataInvalid            = NewManagementApiResponseError("co000007", "request data invalid")
+	ErrorMessageIncorrectZip           = NewManagementApiResponseError("co000008", "incorrect zip code")
 
 	ValidationErrors = map[string]*grpc.ResponseErrorMessage{
 		ValidationParameterOrderId:   ErrorIncorrectOrderId,
