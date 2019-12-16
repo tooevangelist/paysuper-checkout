@@ -312,7 +312,7 @@ func (suite *OrderTestSuite) Test_GetPaymentFormData_OrderValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -402,7 +402,7 @@ func (suite *OrderTestSuite) Test_RecreateOrder_OrderValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -483,7 +483,7 @@ func (suite *OrderTestSuite) Test_ChangeLanguage_OrderIdEmptyError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Equal(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Equal(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message.(grpc.ResponseErrorMessage).Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -513,7 +513,7 @@ func (suite *OrderTestSuite) Test_ChangeLanguage_OrderValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -596,7 +596,7 @@ func (suite *OrderTestSuite) Test_ChangeCustomer_OrderIdEmptyError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Equal(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Equal(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message.(grpc.ResponseErrorMessage).Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -626,7 +626,7 @@ func (suite *OrderTestSuite) Test_ChangeCustomer_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.NewValidationError(""), httpErr.Message)
+	assert.Regexp(suite.T(), common.NewValidationError("").Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -710,7 +710,7 @@ func (suite *OrderTestSuite) Test_ProcessBillingAddress_OrderIdEmptyError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Equal(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Equal(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message.(grpc.ResponseErrorMessage).Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -740,7 +740,7 @@ func (suite *OrderTestSuite) Test_ProcessBillingAddress_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.NewValidationError(""), httpErr.Message)
+	assert.Regexp(suite.T(), common.NewValidationError("").Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -751,14 +751,13 @@ func (suite *OrderTestSuite) Test_ProcessBillingAddress_ValidationZipError() {
 	res, err := suite.executeProcessBillingAddressTest(orderId, body)
 
 	assert.Error(suite.T(), err)
-
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
 
-	msg, ok := httpErr.Message.(*grpc.ResponseErrorMessage)
+	msg, ok := httpErr.Message.(grpc.ResponseErrorMessage)
 	assert.True(suite.T(), ok)
-	assert.Equal(suite.T(), common.ErrorMessageIncorrectZip, msg)
+	assert.Equal(suite.T(), common.ErrorMessageIncorrectZip.Message, msg.Message)
 	assert.Regexp(suite.T(), "Zip", msg.Details)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
@@ -841,7 +840,7 @@ func (suite *OrderTestSuite) Test_NotifySale_OrderIdEmptyError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Equal(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Equal(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message.(grpc.ResponseErrorMessage).Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -871,7 +870,7 @@ func (suite *OrderTestSuite) Test_NotifySale_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.NewValidationError(""), httpErr.Message)
+	assert.Regexp(suite.T(), common.NewValidationError("").Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -932,7 +931,7 @@ func (suite *OrderTestSuite) Test_NotifyNewRegion_OrderIdEmptyError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Equal(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Equal(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message.(grpc.ResponseErrorMessage).Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -962,7 +961,7 @@ func (suite *OrderTestSuite) Test_NotifyNewRegion_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.NewValidationError(""), httpErr.Message)
+	assert.Regexp(suite.T(), common.NewValidationError("").Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -1024,7 +1023,7 @@ func (suite *OrderTestSuite) Test_ChangePlatformPayment_OrderIdEmptyError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Equal(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Equal(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message.(grpc.ResponseErrorMessage).Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -1054,7 +1053,7 @@ func (suite *OrderTestSuite) Test_ChangePlatformPayment_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.NewValidationError(""), httpErr.Message)
+	assert.Regexp(suite.T(), common.NewValidationError("").Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
@@ -1136,7 +1135,7 @@ func (suite *OrderTestSuite) Test_GetReceipt_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 

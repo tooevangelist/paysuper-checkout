@@ -50,8 +50,8 @@ func (d *Dispatcher) Dispatch(echoHttp *echo.Echo) error {
 	echoHttp.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     allowOrigins,
 		AllowCredentials: true,
-		AllowHeaders:     []string{"authorization", "content-type"},
-		ExposeHeaders:    []string{"authorization", "content-type", "set-cookie", "cookie"},
+		AllowHeaders:     []string{"content-type"},
+		ExposeHeaders:    []string{"content-type", "set-cookie", "cookie"},
 	})) // 2
 	// Called before routes
 	echoHttp.Use(d.RawBodyPreMiddleware) // 1

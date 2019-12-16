@@ -38,7 +38,7 @@ func CheckProjectAuthRequestSignature(dispatch HandlerSet, ctx echo.Context, pro
 }
 
 // GetValidationError
-func GetValidationError(err error) (rspErr *grpc.ResponseErrorMessage) {
+func GetValidationError(err error) (rspErr grpc.ResponseErrorMessage) {
 	vErr := err.(validator.ValidationErrors)[0] // TODO: possible out of range
 	val, ok := ValidationErrors[vErr.Field()]
 

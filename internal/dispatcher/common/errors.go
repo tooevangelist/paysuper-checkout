@@ -5,18 +5,18 @@ import (
 )
 
 // NewManagementApiResponseError
-func NewManagementApiResponseError(code, msg string, details ...string) *grpc.ResponseErrorMessage {
+func NewManagementApiResponseError(code, msg string, details ...string) grpc.ResponseErrorMessage {
 	var det string
 	if len(details) > 0 && details[0] != "" {
 		det = details[0]
 	} else {
 		det = ""
 	}
-	return &grpc.ResponseErrorMessage{Code: code, Message: msg, Details: det}
+	return grpc.ResponseErrorMessage{Code: code, Message: msg, Details: det}
 }
 
 // NewValidationError
-func NewValidationError(details string) *grpc.ResponseErrorMessage {
+func NewValidationError(details string) grpc.ResponseErrorMessage {
 	return NewManagementApiResponseError(ErrorValidationFailed.Code, ErrorValidationFailed.Message, details)
 }
 
@@ -30,7 +30,7 @@ var (
 	ErrorRequestDataInvalid            = NewManagementApiResponseError("co000007", "request data invalid")
 	ErrorMessageIncorrectZip           = NewManagementApiResponseError("co000008", "incorrect zip code")
 
-	ValidationErrors = map[string]*grpc.ResponseErrorMessage{
+	ValidationErrors = map[string]grpc.ResponseErrorMessage{
 		ValidationParameterOrderId:   ErrorIncorrectOrderId,
 		ValidationParameterOrderUuid: ErrorIncorrectOrderId,
 	}

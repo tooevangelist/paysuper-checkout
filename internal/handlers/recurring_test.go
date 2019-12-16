@@ -113,7 +113,7 @@ func (suite *RecurringTestSuite) Test_RemoveSavedCard_ValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.NewValidationError(""), httpErr.Message)
+	assert.Regexp(suite.T(), common.NewValidationError("").Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 

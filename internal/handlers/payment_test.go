@@ -66,7 +66,7 @@ func (suite *PaymentTestSuite) Test_ProcessCreatePayment_Ok() {
 
 	res, err := suite.executeProcessCreatePaymentTest(body)
 
-	assert.Error(suite.T(), err)
+	assert.NoError(suite.T(), err)
 	assert.Equal(suite.T(), http.StatusOK, res.Code)
 	assert.NotEmpty(suite.T(), res.Body.String())
 	assert.Regexp(suite.T(), "redirect_url", res.Body.String())

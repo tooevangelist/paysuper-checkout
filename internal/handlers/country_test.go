@@ -80,7 +80,7 @@ func (suite *CountryTestSuite) Test_GetPaymentCountries_OrderValidationError() {
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(suite.T(), ok)
 	assert.Equal(suite.T(), http.StatusBadRequest, httpErr.Code)
-	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId, httpErr.Message)
+	assert.Regexp(suite.T(), common.ErrorIncorrectOrderId.Message, httpErr.Message)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
 
