@@ -151,8 +151,6 @@ func (h *OrderRoute) createJson(ctx echo.Context) error {
 
 func (h *OrderRoute) getPaymentFormData(ctx echo.Context) error {
 	req := &grpc.PaymentFormJsonDataRequest{
-		Scheme:  h.cfg.HttpScheme,
-		Host:    ctx.Request().Host,
 		Locale:  ctx.Request().Header.Get(common.HeaderAcceptLanguage),
 		Ip:      ctx.RealIP(),
 		Referer: ctx.Request().Header.Get(common.HeaderReferer),
@@ -173,7 +171,7 @@ func (h *OrderRoute) getPaymentFormData(ctx echo.Context) error {
 		return echo.NewHTTPError(int(res.Status), res.Message)
 	}
 
-	expire := time.Now().AddDate(0, 0, 30)
+	expire := time.Now().Add(h.cfg.CustomerTokenCookiesLifetime)
 	helpers.SetResponseCookie(ctx, common.CustomerTokenCookiesName, res.Cookie, h.cfg.CookieDomain, expire)
 
 	return ctx.JSON(http.StatusOK, res.Item)
@@ -273,7 +271,7 @@ func (h *OrderRoute) processBillingAddress(ctx echo.Context) error {
 		return echo.NewHTTPError(int(res.Status), res.Message)
 	}
 
-	expire := time.Now().AddDate(0, 0, 30)
+	expire := time.Now().Add(h.cfg.CustomerTokenCookiesLifetime)
 	helpers.SetResponseCookie(ctx, common.CustomerTokenCookiesName, res.Cookie, h.cfg.CookieDomain, expire)
 
 	return ctx.JSON(http.StatusOK, res.Item)

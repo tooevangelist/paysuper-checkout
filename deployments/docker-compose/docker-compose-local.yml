@@ -10,7 +10,6 @@ services:
     ports:
       - "3001:3001"
     environment:
-      HTTP_SCHEME: http
       MICRO_REGISTRY: consul
       MICRO_REGISTRY_ADDRESS: consul
       PAYMENT_FORM_JS_LIBRARY_URL: "unknown"

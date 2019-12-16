@@ -3,7 +3,6 @@ package http
 import (
 	"context"
 	"github.com/ProtocolONE/go-core/v2/pkg/entrypoint"
-	_ "github.com/micro/go-plugins/broker/rabbitmq"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
 	_ "github.com/micro/go-plugins/transport/grpc"
 	"github.com/paysuper/paysuper-checkout/cmd"
