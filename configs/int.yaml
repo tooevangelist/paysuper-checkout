@@ -1,0 +1,7 @@
+micro:
+  selector: static
+  name: pscheckout
+dispatcher:
+  global:
+    paymentFormJsLibraryUrl: "unknown"
+    orderInlineFormUrlMask: "%s://%s/order/%s"
