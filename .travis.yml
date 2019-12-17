@@ -8,7 +8,7 @@ dist: trusty
 stages:
   - test
   - name: deploy
-    if: branch IN (develop)
+    if: branch IN (develop) AND type = push
 env:
   global:
     - GO111MODULE=on
