@@ -16,7 +16,7 @@ const (
 
 type CountryRoute struct {
 	dispatch common.HandlerSet
-	cfg      common.Config
+	cfg      *common.Config
 	provider.LMT
 }
 
@@ -25,7 +25,7 @@ func NewCountryRoute(set common.HandlerSet, cfg *common.Config) *CountryRoute {
 	return &CountryRoute{
 		dispatch: set,
 		LMT:      &set.AwareSet,
-		cfg:      *cfg,
+		cfg:      cfg,
 	}
 }
 

@@ -17,7 +17,7 @@ const (
 
 type RecurringRoute struct {
 	dispatch common.HandlerSet
-	cfg      common.Config
+	cfg      *common.Config
 	provider.LMT
 }
 
@@ -26,7 +26,7 @@ func NewRecurringRoute(set common.HandlerSet, cfg *common.Config) *RecurringRout
 	return &RecurringRoute{
 		dispatch: set,
 		LMT:      &set.AwareSet,
-		cfg:      *cfg,
+		cfg:      cfg,
 	}
 }
 

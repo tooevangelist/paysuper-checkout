@@ -16,7 +16,7 @@ const (
 
 type PaymentRoute struct {
 	dispatch common.HandlerSet
-	cfg      common.Config
+	cfg      *common.Config
 	provider.LMT
 }
 
@@ -25,7 +25,7 @@ func NewPaymentRoute(set common.HandlerSet, cfg *common.Config) *PaymentRoute {
 	return &PaymentRoute{
 		dispatch: set,
 		LMT:      &set.AwareSet,
-		cfg:      *cfg,
+		cfg:      cfg,
 	}
 }
 

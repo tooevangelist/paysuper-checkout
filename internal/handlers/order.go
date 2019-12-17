@@ -54,7 +54,7 @@ type ListOrdersRequest struct {
 
 type OrderRoute struct {
 	dispatch common.HandlerSet
-	cfg      common.Config
+	cfg      *common.Config
 	provider.LMT
 }
 
@@ -63,7 +63,7 @@ func NewOrderRoute(set common.HandlerSet, cfg *common.Config) *OrderRoute {
 	return &OrderRoute{
 		dispatch: set,
 		LMT:      &set.AwareSet,
-		cfg:      *cfg,
+		cfg:      cfg,
 	}
 }
 
