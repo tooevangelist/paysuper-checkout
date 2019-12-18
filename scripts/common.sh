@@ -16,4 +16,4 @@ GOOS="linux"
 GOARCH="amd64"
 PROJECT_NAME="paysuper-checkout"
 DOCKER_NETWORK="p1devnet"
-DOCKER_IMAGE=p1hub/p1payapi
+DOCKER_IMAGE=p1hub/pscheckout
