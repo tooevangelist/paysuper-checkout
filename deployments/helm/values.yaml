@@ -4,7 +4,7 @@
 enableCertIssuer: true
 
 ingress:
-  hostname: p1payapi.tst.protocol.one
+  hostname: checkout.tst.protocol.one
   path: /
   hostnamePrefix:
 
