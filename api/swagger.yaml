@@ -91,6 +91,45 @@ paths:
       tags:
         - Order
 
+  "/orders/receipt/{receipt_id}/{order_id}":
+    get:
+      consumes:
+        - application/json
+      description: Get data for rendering payment receipt
+      parameters:
+        - description: Receipt unique identifier
+          in: path
+          name: receipt_id
+          required: true
+          type: string
+        - description: Order unique identifier
+          in: path
+          name: order_id
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PaymentReceiptResponse'
+        "400":
+          description: Invalid request data
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "404":
+          description: Not found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Object with error message
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get data for rendering payment receipt
+      tags:
+        - Order
+
   "/api/v1/orders/{id}/billing_address":
     post:
       consumes:
@@ -566,6 +605,9 @@ definitions:
         type: array
         items:
           type: string
+      vat_payer:
+        type: string
+        description: "definition of who pays vat for orders in this project, allowed values are buyer | seller | nobody"
     type: object
 
   UserAddressOrder:
@@ -848,3 +890,39 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/OrderCreateResponseItem'
+
+  model.PaymentReceiptResponse:
+    properties:
+      total_price:
+        description: total order price formatted with currency (not including vat)
+        type: number
+      transaction_id:
+        type: string
+        description: unique identifier for the transaction
+      transaction_date:
+        $ref: '#/definitions/ProtobufTimestamp'
+        description: object contain information about time when payment processed in payment system
+      project_name:
+        type: string
+        description: project name
+      merchant_name:
+        type: string
+        description: merchant name
+      items:
+        description: list of buyed items in order
+        type: array
+        items:
+          $ref: '#/definitions/OrderCreateResponseItem'
+      order_type:
+        type: string
+        description: type of order
+      platform_name:
+        type: string
+        description: platform name (if any)
+      payment_partner:
+        type: string
+        description: payment partner name
+      vat_payer:
+        type: string
+        description: "definition of who pays vat for orders in this project, allowed values are buyer | seller | nobody"
+    type: object
