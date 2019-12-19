@@ -895,7 +895,7 @@ definitions:
     properties:
       total_price:
         description: total order price formatted with currency (not including vat)
-        type: number
+        type: string
       transaction_id:
         type: string
         description: unique identifier for the transaction
@@ -925,4 +925,22 @@ definitions:
       vat_payer:
         type: string
         description: "definition of who pays vat for orders in this project, allowed values are buyer | seller | nobody"
+      vat_in_order_currency:
+        description: vat amount in order currency formatted with currency sign
+        type: string
+      vat_in_charge_currency:
+        description: vat amount in order charge currency formatted with currency sign
+        type: string
+      total_amount:
+        description: order total amount with vat in order currency formatted with currency sign
+        type: string
+      total_charge:
+        description: order total amount with vat in order charge currency formatted with currency sign
+        type: string
+      receipt_id:
+        description: order receipt id
+        type: string
+      url:
+        description: order receipt url
+        type: string
     type: object
