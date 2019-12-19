@@ -1266,3 +1266,25 @@ func (suite *OrderTestSuite) Test_GetOrderForPaylink_BillingResponseStatusError(
 	assert.Equal(suite.T(), http.StatusInternalServerError, httpErr.Code)
 	assert.NotEmpty(suite.T(), res.Body.String())
 }
+
+func (suite *OrderTestSuite) Test_GetOrderForPaylink_InvalidFormUrlMask() {
+	id := uuid.New().String()
+
+	bill := &billMock.BillingService{}
+	bill.On("IncrPaylinkVisits", mock2.Anything, mock2.Anything).Return(nil, nil)
+	bill.On("OrderCreateByPaylink", mock2.Anything, mock2.Anything).
+		Return(&grpc.OrderCreateProcessResponse{Status: pkg.ResponseStatusOk, Item: &billing.Order{Uuid: "uuid"}}, nil)
+	suite.router.dispatch.Services.Billing = bill
+
+	suite.router.cfg.OrderInlineFormUrlMask = string([]byte{0x7f})
+
+	res, err := suite.executeGetOrderForPaylinkTest(id)
+
+	assert.Error(suite.T(), err)
+
+	httpErr, ok := err.(*echo.HTTPError)
+	assert.True(suite.T(), ok)
+	assert.Equal(suite.T(), http.StatusInternalServerError, httpErr.Code)
+	assert.Equal(suite.T(), common.ErrorUnknown, httpErr.Message)
+	assert.NotEmpty(suite.T(), res.Body.String())
+}
