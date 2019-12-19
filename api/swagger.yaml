@@ -943,4 +943,7 @@ definitions:
       url:
         description: order receipt url
         type: string
+      vat_rate:
+        description: order vat rate, formatted with precent sign
+        type: string
     type: object
