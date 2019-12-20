@@ -20,6 +20,8 @@ import (
 	"time"
 )
 
+var uuidRegExp = "[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[8|9|aA|bB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}"
+
 type OrderTestSuite struct {
 	suite.Suite
 	router *OrderRoute
@@ -75,7 +77,7 @@ func (suite *OrderTestSuite) Test_CreateJson_Ok_WithPreparedOrder() {
 	assert.Equal(suite.T(), http.StatusOK, res.Code)
 	assert.NotEmpty(suite.T(), res.Body.String())
 	assert.Contains(suite.T(), res.Body.String(), "payment_form_url")
-	assert.Contains(suite.T(), res.Body.String(), "order_id="+orderId)
+	assert.Regexp(suite.T(), uuidRegExp, res.Body.String())
 }
 
 func (suite *OrderTestSuite) Test_CreateJson_WithPreparedOrder_BillingReturnError() {
@@ -137,7 +139,7 @@ func (suite *OrderTestSuite) Test_CreateJson_Ok_WithoutPreparedOrder() {
 	assert.Equal(suite.T(), http.StatusOK, res.Code)
 	assert.NotEmpty(suite.T(), res.Body.String())
 	assert.Contains(suite.T(), res.Body.String(), "payment_form_url")
-	assert.Contains(suite.T(), res.Body.String(), "order_id="+orderId)
+	assert.Regexp(suite.T(), uuidRegExp, res.Body.String())
 }
 
 func (suite *OrderTestSuite) Test_CreateJson_WithoutPreparedOrder_BillingReturnError() {
@@ -389,7 +391,7 @@ func (suite *OrderTestSuite) Test_RecreateOrder_Ok() {
 	assert.Equal(suite.T(), http.StatusOK, res.Code)
 	assert.NotEmpty(suite.T(), res.Body.String())
 	assert.Contains(suite.T(), res.Body.String(), "payment_form_url")
-	assert.Contains(suite.T(), res.Body.String(), "order_id="+orderId)
+	assert.Regexp(suite.T(), uuidRegExp, res.Body.String())
 }
 
 func (suite *OrderTestSuite) Test_RecreateOrder_OrderValidationError() {
@@ -1196,7 +1198,7 @@ func (suite *OrderTestSuite) Test_GetOrderForPaylink_Ok() {
 	bill := &billMock.BillingService{}
 	bill.On("IncrPaylinkVisits", mock2.Anything, mock2.Anything).Return(nil, nil)
 	bill.On("OrderCreateByPaylink", mock2.Anything, mock2.Anything).
-		Return(&grpc.OrderCreateProcessResponse{Status: pkg.ResponseStatusOk, Item: &billing.Order{Uuid: "uuid"}}, nil)
+		Return(&grpc.OrderCreateProcessResponse{Status: pkg.ResponseStatusOk, Item: &billing.Order{Uuid: "fbd3036f-0f1c-4e98-b71c-d4cd61213f90"}}, nil)
 	suite.router.dispatch.Services.Billing = bill
 
 	res, err := suite.executeGetOrderForPaylinkTest(id)
@@ -1207,7 +1209,7 @@ func (suite *OrderTestSuite) Test_GetOrderForPaylink_Ok() {
 
 	url, err := res.Result().Location()
 	assert.NoError(suite.T(), err)
-	assert.Contains(suite.T(), url.String(), "order_id=uuid")
+	assert.Regexp(suite.T(), uuidRegExp, url.String())
 }
 
 func (suite *OrderTestSuite) Test_GetOrderForPaylink_Ok_WithGORutineIsFalse() {
@@ -1216,7 +1218,7 @@ func (suite *OrderTestSuite) Test_GetOrderForPaylink_Ok_WithGORutineIsFalse() {
 	bill := &billMock.BillingService{}
 	bill.On("IncrPaylinkVisits", mock2.Anything, mock2.Anything).Return(nil, errors.New("error"))
 	bill.On("OrderCreateByPaylink", mock2.Anything, mock2.Anything).
-		Return(&grpc.OrderCreateProcessResponse{Status: pkg.ResponseStatusOk, Item: &billing.Order{Uuid: "uuid"}}, nil)
+		Return(&grpc.OrderCreateProcessResponse{Status: pkg.ResponseStatusOk, Item: &billing.Order{Uuid: "fbd3036f-0f1c-4e98-b71c-d4cd61213f90"}}, nil)
 	suite.router.dispatch.Services.Billing = bill
 
 	res, err := suite.executeGetOrderForPaylinkTest(id)
@@ -1227,7 +1229,7 @@ func (suite *OrderTestSuite) Test_GetOrderForPaylink_Ok_WithGORutineIsFalse() {
 
 	url, err := res.Result().Location()
 	assert.NoError(suite.T(), err)
-	assert.Contains(suite.T(), url.String(), "order_id=uuid")
+	assert.Regexp(suite.T(), uuidRegExp, url.String())
 }
 
 func (suite *OrderTestSuite) Test_GetOrderForPaylink_BillingReturnError() {

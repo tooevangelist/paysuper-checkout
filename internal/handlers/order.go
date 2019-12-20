@@ -143,7 +143,7 @@ func (h *OrderRoute) createJson(ctx echo.Context) error {
 
 	response := &CreateOrderJsonProjectResponse{
 		Id:             order.Uuid,
-		PaymentFormUrl: h.cfg.OrderInlineFormUrlMask + "?order_id=" + order.Uuid,
+		PaymentFormUrl: h.cfg.OrderInlineFormUrlMask + order.Uuid,
 	}
 
 	return ctx.JSON(http.StatusOK, response)
@@ -197,7 +197,7 @@ func (h *OrderRoute) recreateOrder(ctx echo.Context) error {
 	order := res.Item
 	response := &CreateOrderJsonProjectResponse{
 		Id:             order.Uuid,
-		PaymentFormUrl: h.cfg.OrderInlineFormUrlMask + "?order_id=" + order.Uuid,
+		PaymentFormUrl: h.cfg.OrderInlineFormUrlMask + order.Uuid,
 	}
 
 	return ctx.JSON(http.StatusOK, response)
@@ -386,9 +386,8 @@ func (h *OrderRoute) getOrderForPaylink(ctx echo.Context) error {
 		return echo.NewHTTPError(int(res.Status), res.Message)
 	}
 
-	qParams.Set("order_id", res.Item.Uuid)
 	inlineFormRedirectUrl, err := u.NormalizeURLString(
-		h.cfg.OrderInlineFormUrlMask+"?"+qParams.Encode(),
+		h.cfg.OrderInlineFormUrlMask+res.Item.Uuid+"?"+qParams.Encode(),
 		u.FlagsUsuallySafeGreedy|u.FlagRemoveDuplicateSlashes,
 	)
 

@@ -7,15 +7,15 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/paysuper/paysuper-checkout)](https://goreportcard.com/report/github.com/paysuper/paysuper-checkout) 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/paysuper/paysuper-checkout)
 
-PaySuper is a unique, simple payment toolkit designed to make developers self-reliant. It’s an open-source payment 
-service with a highly customizable payment form, an intuitive API, and comprehensible, eye-catching reports.
+PaySuper is a unique, simple payment toolkit designed to make developers self-reliant. It’s an open-source payment service with a highly customizable payment form, an intuitive API, and comprehensible, eye-catching reports.
 
 |   | PaySuper Service Architecture
 :---: | :---
 ✨ | **Checkout integration.** [PaySuper JS SDK](https://github.com/paysuper/paysuper-js-sdk) is designed to integrate a Checkout Form on a merchant's website or a game client.
 💵 | **Frontend for a payment form.** [PaySuper Checkout Form](https://github.com/paysuper/paysuper-payment-form) is a frontend for a sigle-page application with a payment form.
 📊 | **Frontend for a merchant.** [PaySuper Dashboard](https://github.com/paysuper/paysuper-dashboard) is the BFF server and frontend to interact with all PaySuper related features for merchants.
-🔧 | **Dashboard API Backend.** [PaySuper Management API](https://github.com/paysuper/paysuper-management-api) is a REST API backend for the [PaySuper Dashboard](https://github.com/paysuper/paysuper-dashboard) and the [PaySuper Checkout Form](https://github.com/paysuper/paysuper-payment-form). Public API methods are documented in the [API Reference](https://docs.pay.super.com/api).
+🔧 | **Billing API Backend.** [PaySuper Checkout](https://github.com/paysuper/paysuper-checkout) is a REST API backend for [PaySuper Checkout Form](https://github.com/paysuper/paysuper-payment-form) and a billing processing such as purchase receipts and others. Public API methods are documented in the [API Reference](https://docs.pay.super.com/api).
+🔧 | **Management API Backend.** [PaySuper Management API](https://github.com/paysuper/paysuper-management-api) is a REST API backend for [PaySuper Dashboard](https://github.com/paysuper/paysuper-dashboard) and other management API methods. Public API methods are documented in the [API Reference](https://docs.pay.super.com/api).
 💳 | **Payment processing.** [Billing Server](https://github.com/paysuper/paysuper-billing-server) is a micro-service that provides with any payment processing business logic.
 
 ***
@@ -27,7 +27,6 @@ service with a highly customizable payment form, an intuitive API, and comprehen
     - [Branches](#branches)
     - [Versioning](#versioning)
 - [Tests](#tests)
-- [Terms](#terms)
 - [Contributing](#contributing-support-feature-requests)
 - [License](#license)
 
@@ -52,20 +51,6 @@ Every API method is covered by tests. The tests classes located in the same dire
 code classes and have suffix `_test` at the end of its titles.
 
 Test resources located in the `test` directory.
-
-## Terms
-
-### Accounting currency
-
-`PSP Currency` - used to save the amount of the payment transaction in the PSP accounting currency. 
-PSP currency can be set using the environment variable named "PSP_ACCOUNTING_CURRENCY"
-
-`Merchant currency` -  used to save the amount of the payment transaction in the merchant (projects owner) 
-accounting currency. Merchant currency can be set using merchant settings in PSP control panel.
-
-`Payment system currency` - used to save the amount of the payment transaction in the payment system 
-(payment methods owner) accounting currency. Payment system currency can be set using payment system settings in 
-PSP admin panel.
 
 ## Contributing, Support, Feature Requests
 If you like this project then you can put a ⭐️ on it. It means a lot to us.
