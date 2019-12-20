@@ -281,7 +281,7 @@ func (suite *OrderTestSuite) Test_GetPaymentFormData_Ok() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = "ffffffffffffffffffffffff"
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	bill := &billMock.BillingService{}
@@ -302,7 +302,7 @@ func (suite *OrderTestSuite) Test_GetPaymentFormData_OrderValidationError() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = "ffffffffffffffffffffffff"
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	res, err := suite.executeGetPaymentFormDataTest(orderId, cookie)
@@ -321,7 +321,7 @@ func (suite *OrderTestSuite) Test_GetPaymentFormData_BillingReturnError() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = "ffffffffffffffffffffffff"
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	bill := &billMock.BillingService{}
@@ -346,7 +346,7 @@ func (suite *OrderTestSuite) Test_GetPaymentFormData_BillingResponseStatusError(
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = "ffffffffffffffffffffffff"
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	bill := &billMock.BillingService{}

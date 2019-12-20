@@ -64,7 +64,7 @@ func (suite *RecurringTestSuite) Test_RemoveSavedCard_Ok() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = bson.NewObjectId().Hex()
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	bill := &billMock.BillingService{}
@@ -84,7 +84,7 @@ func (suite *RecurringTestSuite) Test_RemoveSavedCard_BindError() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = bson.NewObjectId().Hex()
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	res, err := suite.executeRemoveSavedCardTest(body, cookie)
@@ -103,7 +103,7 @@ func (suite *RecurringTestSuite) Test_RemoveSavedCard_ValidationError() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = bson.NewObjectId().Hex()
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	res, err := suite.executeRemoveSavedCardTest(body, cookie)
@@ -122,7 +122,7 @@ func (suite *RecurringTestSuite) Test_RemoveSavedCard_BillingReturnError() {
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = bson.NewObjectId().Hex()
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	bill := &billMock.BillingService{}
@@ -147,7 +147,7 @@ func (suite *RecurringTestSuite) Test_RemoveSavedCard_BillingResponseStatusError
 	cookie := new(http.Cookie)
 	cookie.Name = common.CustomerTokenCookiesName
 	cookie.Value = bson.NewObjectId().Hex()
-	cookie.Expires = time.Now().Add(suite.router.cfg.CustomerTokenCookiesLifetime)
+	cookie.Expires = time.Now().Add(time.Duration(suite.router.cfg.CustomerTokenCookiesLifetimeHours) * time.Second)
 	cookie.HttpOnly = true
 
 	bill := &billMock.BillingService{}

@@ -171,7 +171,7 @@ func (h *OrderRoute) getPaymentFormData(ctx echo.Context) error {
 		return echo.NewHTTPError(int(res.Status), res.Message)
 	}
 
-	expire := time.Now().Add(h.cfg.CustomerTokenCookiesLifetime)
+	expire := time.Now().Add(time.Duration(h.cfg.CustomerTokenCookiesLifetimeHours) * time.Hour)
 	helpers.SetResponseCookie(ctx, common.CustomerTokenCookiesName, res.Cookie, h.cfg.CookieDomain, expire)
 
 	return ctx.JSON(http.StatusOK, res.Item)
@@ -271,7 +271,7 @@ func (h *OrderRoute) processBillingAddress(ctx echo.Context) error {
 		return echo.NewHTTPError(int(res.Status), res.Message)
 	}
 
-	expire := time.Now().Add(h.cfg.CustomerTokenCookiesLifetime)
+	expire := time.Now().Add(time.Duration(h.cfg.CustomerTokenCookiesLifetimeHours) * time.Hour)
 	helpers.SetResponseCookie(ctx, common.CustomerTokenCookiesName, res.Cookie, h.cfg.CookieDomain, expire)
 
 	return ctx.JSON(http.StatusOK, res.Item)
