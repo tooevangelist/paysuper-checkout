@@ -26,7 +26,6 @@ backend:
     name: pscheckout
     protocol: TCP
   env:
-    - PAYMENT_FORM_JS_LIBRARY_URL
     - ORDER_INLINE_FORM_URL_MASK
     - COOKIE_DOMAIN
     - ALLOW_ORIGIN

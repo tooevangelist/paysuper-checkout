@@ -12,7 +12,6 @@ services:
     environment:
       MICRO_REGISTRY: consul
       MICRO_REGISTRY_ADDRESS: consul
-      PAYMENT_FORM_JS_LIBRARY_URL: "unknown"
       ORDER_INLINE_FORM_URL_MASK: "unknown"
 volumes:
   payone-mongo:
