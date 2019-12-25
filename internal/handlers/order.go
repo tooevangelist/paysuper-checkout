@@ -81,6 +81,19 @@ func (h *OrderRoute) Route(groups *common.Groups) {
 	groups.Common.GET(paylinkIdPath, h.getOrderForPaylink)
 }
 
+// @summary Create a payment order
+// @desc Create a payment order with parameters
+// @id orderPathСreateJson
+// @tag Payment Order
+// @accept application/json
+// @produce application/json
+// @body billing.OrderCreateRequest
+// @success 200 {object} CreateOrderJsonProjectResponse OK
+// Object contains data to render payment form and the order ID.
+// @failure 401 {string} Unauthorized.
+// See error code and error message for more details.
+// @failure 500 {string} Internal Server Error
+// @router /api/v1/order [post]
 func (h *OrderRoute) createJson(ctx echo.Context) error {
 	req := &billing.OrderCreateRequest{}
 
