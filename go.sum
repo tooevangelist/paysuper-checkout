@@ -320,6 +320,7 @@ github.com/gogo/protobuf v0.0.0-20190410021324-65acae22fc9/go.mod h1:SlYgWuQ5SjC
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.0/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.1/go.mod h1:hp+jE20tsWTFYpLwKvXlhS1hjn+gTNwPg2I6zVXpSg4=
+github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/gogo/protobuf v1.3.0 h1:G8O7TerXerS4F6sx9OV7/nRfJdnXgHZu/S/7F2SN+UE=
 github.com/gogo/protobuf v1.3.0/go.mod h1:SlYgWuQ5SjCEi6WLHjHCa1yvBfUnHcTbrrZtXPKa29o=
 github.com/golang-migrate/migrate/v4 v4.3.1/go.mod h1:mJ89KBgbXmM3P49BqOxRL3riNF/ATlg5kMhm17GA0dE=
@@ -745,6 +746,8 @@ github.com/paysuper/paysuper-billing-server v1.0.0 h1:UjRpeMniuwGXug0WKp+9FvL0XI
 github.com/paysuper/paysuper-billing-server v1.0.0/go.mod h1:+/zUYPqKgrnrmUKWHgjfTdOhkStm9Xsx1YGAtmKv8Ik=
 github.com/paysuper/paysuper-billing-server v1.1.0 h1:hlh1wGASfdvcU2scqY9Fg4Lvs2P/g/c3oQgqvz7HEQI=
 github.com/paysuper/paysuper-billing-server v1.1.0/go.mod h1:+/zUYPqKgrnrmUKWHgjfTdOhkStm9Xsx1YGAtmKv8Ik=
+github.com/paysuper/paysuper-billing-server v1.1.1-0.20191225165128-842136ef7d03 h1:UELAkW10yDN3yeZNV/XoQiLggYYm1opZ7ubJidHb/oM=
+github.com/paysuper/paysuper-billing-server v1.1.1-0.20191225165128-842136ef7d03/go.mod h1:qgB2nFotJAO7sY4w/7iecR+Yvt7PQsi01Mky9m9p6hk=
 github.com/paysuper/paysuper-currencies v0.0.0-20190903083641-668b8b2b997d/go.mod h1:C+QHdgbjIlAPxHD93/08yi+xWfUgk8maLY8FKFqNzMQ=
 github.com/paysuper/paysuper-currencies v0.0.0-20191209131235-52121b09aab0 h1:7DrckuM24ql1WUdKk6Cmt/YES8BJ5nq7JvptcKShPsg=
 github.com/paysuper/paysuper-currencies v0.0.0-20191209131235-52121b09aab0/go.mod h1:E4w9GTFf1OFe2tCPxIUJR3EW3M8UqwxpRzxMS5aymc4=
