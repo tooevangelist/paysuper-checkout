@@ -11,6 +11,7 @@ import (
 	"github.com/paysuper/paysuper-billing-server/pkg/proto/grpc"
 	"github.com/paysuper/paysuper-checkout/internal/dispatcher/common"
 	"github.com/paysuper/paysuper-checkout/internal/helpers"
+	"go.uber.org/zap"
 	"net/http"
 	"time"
 )
@@ -35,10 +36,9 @@ const (
 
 type CreateOrderJsonProjectResponse struct {
 	// The unique identifier for the created order.
-	Id string `json:"id"`
+	Id             string `json:"id"`
 	// The URL of the PaySuper-hosted payment form.
-	PaymentFormUrl  string                    `json:"payment_form_url"`
-	PaymentFormData *grpc.PaymentFormJsonData `json:"payment_form_data,omitempty"`
+	PaymentFormUrl string `json:"payment_form_url"`
 }
 
 type ListOrdersRequest struct {
@@ -171,6 +171,8 @@ func (h *OrderRoute) getPaymentFormData(ctx echo.Context) error {
 		Referer: ctx.Request().Header.Get(common.HeaderReferer),
 		Cookie:  helpers.GetRequestCookie(ctx, common.CustomerTokenCookiesName),
 	}
+
+	zap.L().Info("debug_token", zap.String("cookie", req.Cookie), zap.String("ip", req.Ip))
 
 	if err := h.dispatch.BindAndValidate(req, ctx); err != nil {
 		return err
