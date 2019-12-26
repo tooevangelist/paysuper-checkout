@@ -35,9 +35,8 @@ const (
 )
 
 type CreateOrderJsonProjectResponse struct {
-	Id              string                    `json:"id"`
-	PaymentFormUrl  string                    `json:"payment_form_url"`
-	PaymentFormData *grpc.PaymentFormJsonData `json:"payment_form_data,omitempty"`
+	Id             string `json:"id"`
+	PaymentFormUrl string `json:"payment_form_url"`
 }
 
 type ListOrdersRequest struct {
