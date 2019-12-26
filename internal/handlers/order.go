@@ -34,7 +34,9 @@ const (
 )
 
 type CreateOrderJsonProjectResponse struct {
-	Id              string                    `json:"id"`
+	// The unique identifier for the created order.
+	Id string `json:"id"`
+	// The URL of the PaySuper-hosted payment form.
 	PaymentFormUrl  string                    `json:"payment_form_url"`
 	PaymentFormData *grpc.PaymentFormJsonData `json:"payment_form_data,omitempty"`
 }
