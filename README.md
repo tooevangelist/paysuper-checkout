@@ -2,8 +2,8 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-brightgreen.svg)](https://www.gnu.org/licenses/gpl-3.0) 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/paysuper/paysuper-checkout/issues)
-[![Build Status](https://travis-ci.org/paysuper/paysuper-checkout.svg?branch=master)](https://travis-ci.org/paysuper/paysuper-checkout) 
-[![codecov](https://codecov.io/gh/paysuper/paysuper-checkout/branch/master/graph/badge.svg)](https://codecov.io/gh/paysuper/paysuper-checkout) 
+[![Build Status](https://travis-ci.org/paysuper/paysuper-checkout.svg?branch=develop)](https://travis-ci.org/paysuper/paysuper-checkout) 
+[![codecov](https://codecov.io/gh/paysuper/paysuper-checkout/branch/develop/graph/badge.svg)](https://codecov.io/gh/paysuper/paysuper-checkout) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/paysuper/paysuper-checkout)](https://goreportcard.com/report/github.com/paysuper/paysuper-checkout) 
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/paysuper/paysuper-checkout)
 
