@@ -35,8 +35,8 @@ const (
 )
 
 type CreateOrderJsonProjectResponse struct {
-	// The unique identifier for the created order.
-	Id             string `json:"id"`
+	// The unique identifier for the order.
+	Id string `json:"id"`
 	// The URL of the PaySuper-hosted payment form.
 	PaymentFormUrl string `json:"payment_form_url"`
 }
@@ -84,16 +84,15 @@ func (h *OrderRoute) Route(groups *common.Groups) {
 }
 
 // @summary Create a payment order
-// @desc Create a payment order with parameters
+// @desc Create a payment order with a user and order data
 // @id orderPathСreateJson
 // @tag Payment Order
 // @accept application/json
 // @produce application/json
 // @body billing.OrderCreateRequest
 // @success 200 {object} CreateOrderJsonProjectResponse OK
-// Object contains the data to render a payment form and the order ID.
-// @failure 400 {object} NewHTTPError See the error code and message for more details.
-// @failure 500 {object} NewHTTPError Internal Server Error
+// @failure 400 {object} grpc.ResponseErrorMessage The error code and message with the error details.
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
 // @router /api/v1/order [post]
 func (h *OrderRoute) createJson(ctx echo.Context) error {
 	req := &billing.OrderCreateRequest{}
