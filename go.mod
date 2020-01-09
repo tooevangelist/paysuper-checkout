@@ -13,13 +13,14 @@ require (
 	github.com/labstack/echo/v4 v4.1.11
 	github.com/micro/go-micro v1.8.0
 	github.com/micro/go-plugins v1.2.0
-	github.com/paysuper/paysuper-billing-server v1.1.1-0.20191225165128-842136ef7d03
+	github.com/paysuper/paysuper-billing-server v1.1.1-0.20200109173240-45c8c165ff37
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/cobra v0.0.5
 	github.com/stretchr/testify v1.4.0
 	github.com/ttacon/libphonenumber v1.0.1
 	go.uber.org/automaxprocs v1.2.0
 	gopkg.in/go-playground/validator.v9 v9.29.1
+	gopkg.in/paysuper/paysuper-database-mongo.v1 v1.0.0-20191120092306-dc35c6f924f1 // indirect
 )
 
 replace (

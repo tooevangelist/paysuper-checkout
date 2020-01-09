@@ -1,0 +1,149 @@
+info:
+  title: PaySuper payment solution service.
+  version: "1.0.0"
+  description: Swagger Specification for PaySuper Payment Form API.
+servers:
+  - url: "https://checkout.pay.super.com"
+    description: Production API
+components:
+  schemas:
+    OrderCreateRequest:
+      type: object
+      required:
+      - project
+      - type
+      properties:
+        project:
+          description: "The ID of the Project found in your merchant account in the PaySuper Dashboard."
+          type: string
+        amount:
+          description: "The order amount as a positive number. It is required for a simple checkout payment."
+          type: number
+        currency:
+          description: "The currency of the order. Three-letter Currency Code ISO 4217, in uppercase. If provided, the amount will be processed in this currency. It is required for a payment when the type equals to simple."
+          type: string
+        account:
+          description: "The user's unique account in the merchant project."
+          type: string
+        order_id:
+          description: "The unique order identifier in the merchant project. This field is not required, but we recommend always sending this field."
+          type: string
+        description:
+          description: "The arbitrary order description."
+          type: string
+        url_success:
+          description: "The redirect URL for the successful payment. You need to enable the dynamic notify URLs option in the Project Settings to use this field."
+          type: string
+        url_fail:
+          description: "The redirect URL for the failed payment. You need to enable the dynamic notify URLs option in the Project Settings to use this field."
+          type: string
+        products:
+          description: "The list of unique identifiers of Products being in the Project. It is required if a payment type is equal to product or key."
+          type: array
+          items:
+            type: string
+        token:
+          description: "An encrypted string that represents certain details of your customer (such as the user ID, email and others), a game and purchase parameters. The token overrides the corresponding parameters in an order object even the required parameters."
+          type: string
+        user:
+          type: object
+          properties:
+            external_id:
+              description: "The user unique identifier in the merchant project."
+              type: string
+            name:
+              description: "The user's name."
+              type: string
+            email:
+              description: "The user's email address."
+              type: string
+            email_verified:
+              description: "Whether the user's email address has been verified on the merchant side."
+              type: boolean
+            phone:
+              description: "The user's phone number."
+              type: string
+            phone_verified:
+              description: "Whether the user's phone number has been verified on the merchant side."
+              type: boolean
+            ip:
+              description: "The user's IP address."
+              type: string
+            locale:
+              description: "The user's locale name. The language code by ISO 639-1 (for instance\" en-U\")."
+              type: string
+            address:
+              type: object
+              properties:
+                country:
+                  description: "The user's country. Two-letter language code by ISO 3166-1, in uppercase (for instance\" U\")"
+                  type: string
+                city:
+                  description: "The user’s city."
+                  type: string
+                postal_code:
+                  description: "The user's postal code."
+                  type: string
+                state:
+                  description: "The user's state code by ISO 3166-2."
+                  type: string
+        type:
+          description: "The order type. It depends on your sales option (Game Keys, Virtual Items, the simple checkout). For products created as Game Keys use the key type, as Virtual Items - the product type, for a simple checkout - the simple type. Enum values: key, product, simple."
+          type: string
+        platform_id:
+          description: "The default platform identifier for which customer buys the in-game key. This field is used only for the key type. Enum values: steam, gog, uplay, origin, psn, xbox, nintendo, itch, egs."
+          type: string
+    CreateOrderJsonProjectResponse:
+      type: object
+      properties:
+        id:
+          description: "The unique identifier for the order."
+          type: string
+        payment_form_url:
+          description: "The URL of the PaySuper-hosted payment form."
+          type: string
+    ResponseErrorMessage:
+      type: object
+      properties:
+        code:
+          description: "The error code."
+          type: string
+        message:
+          description: "The error short description."
+          type: string
+        details:
+          description: "The error details."
+          type: string
+paths:
+  /api/v1/order:
+    post:
+      summary: Create a payment order
+      operationId: orderPathСreateJson
+      description: Create a payment order with a user and order data
+      tags:
+      - Payment Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderCreateRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrderJsonProjectResponse"
+        "400":
+          description: The error code and message with the error details.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseErrorMessage"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseErrorMessage"
+openapi: "3.0.2"
