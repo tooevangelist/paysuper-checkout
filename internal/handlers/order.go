@@ -40,6 +40,10 @@ type CreateOrderJsonProjectResponse struct {
 	PaymentFormUrl string `json:"payment_form_url"`
 }
 
+type ReCreateOrderRequest struct {
+	Id string `json:"order_id"`
+}
+
 type ListOrdersRequest struct {
 	MerchantId    string   `json:"merchant_id" validate:"required,hexadecimal,len=24"`
 	FileType      string   `json:"file_type" validate:"required"`
@@ -90,7 +94,7 @@ func (h *OrderRoute) Route(groups *common.Groups) {
 // @produce application/json
 // @body billing.OrderCreateRequest
 // @success 200 {object} CreateOrderJsonProjectResponse OK
-// @failure 400 {object} grpc.ResponseErrorMessage The error code and message with the error details.
+// @failure 400 {object} grpc.ResponseErrorMessage The error code and message with the error details
 // @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
 // @router /api/v1/order [post]
 func (h *OrderRoute) createJson(ctx echo.Context) error {
@@ -161,6 +165,18 @@ func (h *OrderRoute) createJson(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response)
 }
 
+// @summary Get an order data
+// @desc Get an order data for rendering a payment form
+// @id orderIdPathGetPaymentFormData
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @success 200 {object} grpc.PaymentFormJsonData OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/order/{order_id} [get]
 func (h *OrderRoute) getPaymentFormData(ctx echo.Context) error {
 	req := &grpc.PaymentFormJsonDataRequest{
 		Locale:  ctx.Request().Header.Get(common.HeaderAcceptLanguage),
@@ -194,6 +210,17 @@ func (h *OrderRoute) getPaymentFormData(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res.Item)
 }
 
+// @summary Recreate a payment order
+// @desc Recreate a payment order using the order UUID for the old order
+// @id orderReCreatePathRecreateOrder
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body ReCreateOrderRequest
+// @success 200 {object} CreateOrderJsonProjectResponse OK
+// @failure 400 {object} grpc.ResponseErrorMessage The error code and message with the error details
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @router /api/v1/order/recreate [post]
 func (h *OrderRoute) recreateOrder(ctx echo.Context) error {
 	req := &grpc.OrderReCreateProcessRequest{}
 
@@ -346,6 +373,19 @@ func (h *OrderRoute) changePlatform(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res.Item)
 }
 
+// @summary Getting a payment receipt
+// @desc Getting a payment receipt data for rendering
+// @id orderReceiptPathGetReceipt
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @success 200 {object} billing.OrderReceipt OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param receipt_id path {string} true The unique identifier for the receipt
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/receipt/{receipt_id}/{order_id} [get]
 func (h *OrderRoute) getReceipt(ctx echo.Context) error {
 	req := &grpc.OrderReceiptRequest{}
 
