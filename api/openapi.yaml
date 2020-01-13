@@ -7,10 +7,302 @@ servers:
     description: Production API
 components:
   schemas:
+    CreateOrderJsonProjectResponse:
+      type: object
+      properties:
+        id:
+          description: "The unique identifier for the order."
+          type: string
+        payment_form_url:
+          description: "The URL of the PaySuper-hosted payment form."
+          type: string
+    ResponseErrorMessage:
+      type: object
+      properties:
+        code:
+          description: "The error code."
+          type: string
+        message:
+          description: "The error short description."
+          type: string
+        details:
+          description: "The error details."
+          type: string
+    PaymentFormJsonData:
+      type: object
+      properties:
+        id:
+          description: "The unique identifier for an order."
+          type: string
+        account:
+          description: "The user's unique account in the merchant project. The value can be null."
+          type: string
+        has_vat:
+          description: "Has a true value in case of displaying VAT commission in a payment form."
+          type: boolean
+        vat:
+          description: "The amount of VAT."
+          type: number
+        amount:
+          description: "The payment amount without VAT."
+          type: number
+        total_amount:
+          description: "The payment amount including VAT."
+          type: number
+        currency:
+          description: "The currency of the order."
+          type: string
+        project:
+          type: object
+          properties:
+            name:
+              description: "The project's name."
+              type: string
+            url_success:
+              description: "The redirect URL for a successful payment. Has the null value if the dynamic notify URLs option is not set in the Project Settings."
+              type: string
+            url_fail:
+              description: "The redirect URL for a failed payment. Has the null value if the dynamic notify URLs option is not set in the Project Settings."
+              type: string
+            id:
+              description: "The unique identifier for the project."
+              type: string
+        payment_methods:
+          type: array
+          items:
+            properties:
+              id:
+                description: "The unique identifier for a payment method."
+                type: string
+              name:
+                description: "The payment method's name."
+                type: string
+              type:
+                description: "The payment method's type. Available values: bank_card, ewallet, crypto."
+                type: string
+              group_alias:
+                description: "The payment method's group alias."
+                type: string
+              account_regexp:
+                description: "The regexp mask for checking the main requisite of a payment method."
+                type: string
+              has_saved_cards:
+                description: "Has a true value if contains a saved card as a payment method."
+                type: boolean
+              saved_cards:
+                type: array
+                items:
+                  properties:
+                    id:
+                      description: "The unique identifier of the saved card."
+                      type: string
+                    pan:
+                      description: "The card number."
+                      type: string
+                    card_holder:
+                      description: "The cardholder’s name."
+                      type: string
+                    expire:
+                      type: object
+                      properties:
+                        month:
+                          description: "The card expiration month."
+                          type: string
+                        year:
+                          description: "The card expiration year."
+                          type: string
+        token:
+          description: "An access token to subscribe a WebSocket private channel."
+          type: string
+        user_address_data_required:
+          description: "Has a true value if it's required to get a real user's geo-position information."
+          type: boolean
+        user_ip_data:
+          type: object
+          properties:
+            country:
+              description: "The user's country. Two-letter language code by ISO 3166-1, in uppercase (for instance\" U\")."
+              type: string
+            city:
+              description: "The user's city."
+              type: string
+            zip:
+              description: "The user's postal code."
+              type: string
+        items:
+          type: array
+          items:
+            properties:
+              id:
+                description: "The unique identifier for the item."
+                type: string
+              object:
+                description: "The type of the item."
+                type: string
+              sku:
+                description: "SKU of the item."
+                type: string
+              name:
+                description: "The item's name."
+                type: string
+              description:
+                description: "The item's description."
+                type: string
+              amount:
+                description: "The item's price."
+                type: number
+              currency:
+                description: "The item's price currency. Three-letter Currency Code ISO 4217, in uppercase."
+                type: string
+              images:
+                description: "A list of the item's images URLs."
+                type: array
+                items:
+                  type: string
+              url:
+                description: "The item's URL in a merchant project."
+                type: string
+              created_at:
+                type: object
+                properties:
+                  seconds:
+                    description: "9999-12-31T23:59:59Z inclusive."
+                    type: integer
+                  nanos:
+                    description: "inclusive."
+                    type: integer
+              updated_at:
+                type: object
+                properties:
+                  seconds:
+                    description: "9999-12-31T23:59:59Z inclusive."
+                    type: integer
+                  nanos:
+                    description: "inclusive."
+                    type: integer
+              platform_id:
+                description: "The unique identifier for the platform."
+                type: string
+              code:
+                description: "The game code."
+                type: string
+        email:
+          description: "A user's email."
+          type: string
+        description:
+          description: "An order description."
+          type: string
+        country_payments_allowed:
+          description: "Has a true value if the payments are allowed from this user's country."
+          type: boolean
+        country_change_allowed:
+          description: "Has a true value if a user can select another country in case of the payments are disallowed for his country."
+          type: boolean
+        platforms:
+          type: array
+          items:
+            properties:
+              id:
+                description: "The unique identifier for the platform."
+                type: string
+              name:
+                description: "The platform's name. Available values: steam, gog, uplay, origin, psn, xbox, nintendo, itch, egs."
+                type: string
+        lang:
+          description: "A language predefined by a merchant project for a payment form."
+          type: string
+        is_already_processed:
+          description: "Has a true value if the order has already been processed."
+          type: boolean
+        receipt_url:
+          description: "A receipt link for a completed payment."
+          type: string
+        type:
+          description: "The order type. It depends on your sales option (Game Keys, Virtual Items, the simple checkout). Available values: key, product, simple."
+          type: string
+        charge_currency:
+          description: "A currency of charge. It can differ from the order currency because it also depends on a user's card currency."
+          type: string
+        charge_amount:
+          description: "A total amount of charge."
+          type: number
+        vat_in_charge_currency:
+          description: "VAT currency of charge. It can differ from the order currency because it also depends on a user's card currency."
+          type: number
+        vat_rate:
+          description: "VAT rate."
+          type: number
+        vat_payer:
+          description: "Responsible for VAT. Available values: buyer (VAT is added to the amount of charge), seller (VAT is included to the amount of charge), nobody (VAT exempt)."
+          type: string
+        is_production:
+          description: "Has a true value for a production payment and false for a test payment that goes through a test sandbox."
+          type: boolean
     ReCreateOrderRequest:
       type: object
       properties:
         order_id:
+          type: string
+    OrderReceipt:
+      type: object
+      properties:
+        total_price:
+          description: "The total order price not including VAT formatted with an order currency sign."
+          type: string
+        transaction_id:
+          description: "The unique identifier for the transaction."
+          type: string
+        transaction_date:
+          description: "A transaction date."
+          type: string
+        project_name:
+          description: "The project's name."
+          type: string
+        merchant_name:
+          description: "The merchant's name."
+          type: string
+        items:
+          type: array
+          items:
+            properties:
+              name:
+                description: "The receipt's item name."
+                type: string
+              price:
+                description: "The receipt's item price."
+                type: string
+        order_type:
+          description: "The type of the order."
+          type: string
+        platform_name:
+          description: "The platform's name (if any)."
+          type: string
+        payment_partner:
+          description: "The payment partner's name."
+          type: string
+        vat_payer:
+          description: "Responsible for VAT. Available values: buyer (VAT is added to the amount of charge), seller (VAT is included to the amount of charge), nobody (VAT exempt)."
+          type: string
+        vat_in_order_currency:
+          description: "VAT amount formatted with an order currency sign."
+          type: string
+        vat_in_charge_currency:
+          description: "VAT amount formatted with an order's charge currency sign."
+          type: string
+        total_amount:
+          description: "The order total amount including VAT formatted with an order currency sign."
+          type: string
+        total_charge:
+          description: "The order total amount including VAT formatted with an order's charge currency sign."
+          type: string
+        receipt_id:
+          description: "The unique identifier for the order receipt."
+          type: string
+        url:
+          description: "The order receipt URL."
+          type: string
+        vat_rate:
+          description: "The order VAT rate formatted with a percent sign."
           type: string
     OrderCreateRequest:
       type: object
@@ -81,7 +373,7 @@ components:
               type: object
               properties:
                 country:
-                  description: "The user's country. Two-letter language code by ISO 3166-1, in uppercase (for instance\" U\")"
+                  description: "The user's country. Two-letter language code by ISO 3166-1, in uppercase (for instance\" U\")."
                   type: string
                 city:
                   description: "The user’s city."
@@ -98,225 +390,6 @@ components:
         platform_id:
           description: "The default platform identifier for which customer buys the in-game key. This field is used only for the key type. Enum values: steam, gog, uplay, origin, psn, xbox, nintendo, itch, egs."
           type: string
-    CreateOrderJsonProjectResponse:
-      type: object
-      properties:
-        id:
-          description: "The unique identifier for the order."
-          type: string
-        payment_form_url:
-          description: "The URL of the PaySuper-hosted payment form."
-          type: string
-    ResponseErrorMessage:
-      type: object
-      properties:
-        code:
-          description: "The error code."
-          type: string
-        message:
-          description: "The error short description."
-          type: string
-        details:
-          description: "The error details."
-          type: string
-    PaymentFormJsonData:
-      type: object
-      properties:
-        id:
-          type: string
-        account:
-          description: "@inject_tag: json\" account,omitempt\""
-          type: string
-        has_vat:
-          description: "@inject_tag: json\" has_va\""
-          type: boolean
-        vat:
-          description: "@inject_tag: json\" va\""
-          type: number
-        amount:
-          type: number
-        total_amount:
-          type: number
-        currency:
-          type: string
-        project:
-          type: object
-          properties:
-            name:
-              description: "@inject_tag: json\" nam\""
-              type: string
-            url_success:
-              description: "@inject_tag: json\" url_succes\""
-              type: string
-            url_fail:
-              description: "@inject_tag: json\" url_fai\""
-              type: string
-            id:
-              description: "@inject_tag: json\" i\""
-              type: string
-        payment_methods:
-          type: array
-          items:
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-              type:
-                type: string
-              group_alias:
-                description: "@inject_tag: json\" group_alia\""
-                type: string
-              account_regexp:
-                type: string
-              has_saved_cards:
-                description: "@inject_tag: json\" has_saved_card\""
-                type: boolean
-              saved_cards:
-                type: array
-                items:
-                  properties:
-                    id:
-                      type: string
-                    pan:
-                      type: string
-                    card_holder:
-                      type: string
-                    expire:
-                      type: object
-                      properties:
-                        month:
-                          description: "@inject_tag: bson\" mont\""
-                          type: string
-                        year:
-                          description: "@inject_tag: bson\" yea\""
-                          type: string
-        token:
-          type: string
-        user_address_data_required:
-          description: "@inject_tag: json\" user_address_data_require\""
-          type: boolean
-        user_ip_data:
-          type: object
-          properties:
-            country:
-              description: "@inject_tag: json\" countr\""
-              type: string
-            city:
-              description: "@inject_tag: json\" cit\""
-              type: string
-            zip:
-              description: "@inject_tag: json\" zi\""
-              type: string
-        items:
-          type: array
-          items:
-            properties:
-              id:
-                description: "@inject_tag: validate\" required,hexadecimal,len=2\" json\"i\" bson\"_i\""
-                type: string
-              object:
-                description: "@inject_tag: validate\" require\" json\"objec\" bson\"objec\""
-                type: string
-              sku:
-                description: "@inject_tag: validate\" require\" json\"sk\" bson\"sk\""
-                type: string
-              name:
-                description: "@inject_tag: validate\" require\" json\"nam\" bson\"nam\""
-                type: string
-              description:
-                description: "@inject_tag: validate\" require\" json\"descriptio\" bson\"descriptio\""
-                type: string
-              amount:
-                description: "@inject_tag: validate\" required,numeric,gt=\" json\"amoun\" bson\"amoun\""
-                type: number
-              currency:
-                description: "@inject_tag: validate\" required,alpha,len=\" json\"currenc\" bson\"currenc\""
-                type: string
-              images:
-                description: "@inject_tag: validate\" dive,omitempty,ur\" json\"image\" bson\"image\""
-                type: array
-                items:
-                  type: string
-              url:
-                description: "@inject_tag: validate\" omitempty,ur\" json\"ur\" bson\"ur\""
-                type: string
-              created_at:
-                type: object
-                properties:
-                  seconds:
-                    description: "9999-12-31T23:59:59Z inclusive."
-                    type: integer
-                  nanos:
-                    description: "inclusive."
-                    type: integer
-              updated_at:
-                type: object
-                properties:
-                  seconds:
-                    description: "9999-12-31T23:59:59Z inclusive."
-                    type: integer
-                  nanos:
-                    description: "inclusive."
-                    type: integer
-              platform_id:
-                description: "@inject_tag: validate\" omitempty,min=\" json\"platform_i\" bson\"platform_i\""
-                type: string
-              code:
-                description: "@inject_tag: validate\" omitempty,min=\" json\"cod\" bson\"cod\""
-                type: string
-        email:
-          description: "@inject_tag: json\" emai\""
-          type: string
-        description:
-          description: "@inject_tag: json\" descriptio\""
-          type: string
-        country_payments_allowed:
-          description: "@inject_tag: json\" country_payments_allowe\""
-          type: boolean
-        country_change_allowed:
-          description: "@inject_tag: json\" country_change_allowe\""
-          type: boolean
-        platforms:
-          type: array
-          items:
-            properties:
-              id:
-                description: "@inject_tag: validate\" required,hexadecimal,len=2\" json\"i\""
-                type: string
-              name:
-                description: "@inject_tag: json\" nam\""
-                type: string
-        lang:
-          description: "@inject_tag: json\" lan\""
-          type: string
-        is_already_processed:
-          description: "@inject_tag: json\" is_already_processe\""
-          type: boolean
-        receipt_url:
-          description: "@inject_tag: json\" receipt_ur\""
-          type: string
-        type:
-          description: "@inject_tag: json\" typ\""
-          type: string
-        charge_currency:
-          description: "@inject_tag: json\" charge_currenc\""
-          type: string
-        charge_amount:
-          description: "@inject_tag: json\" charge_amoun\""
-          type: number
-        vat_in_charge_currency:
-          description: "@inject_tag: json\" vat_in_charge_currenc\""
-          type: number
-        vat_rate:
-          description: "@inject_tag: json\" vat_rat\""
-          type: number
-        vat_payer:
-          description: "@inject_tag: json\" vat_paye\""
-          type: string
-        is_production:
-          description: "@inject_tag: json\" is_productio\""
-          type: boolean
 paths:
   /api/v1/order:
     post:
@@ -351,9 +424,9 @@ paths:
                 $ref: "#/components/schemas/ResponseErrorMessage"
   /api/v1/order/{order_id}:
     get:
-      summary: Get a data of an order by the order ID
+      summary: Get an order data
       operationId: orderIdPathGetPaymentFormData
-      description: Get a data of an order for rendering a payment form
+      description: Get an order data for rendering a payment form
       tags:
       - Order
       parameters:
@@ -392,7 +465,7 @@ paths:
     post:
       summary: Recreate a payment order
       operationId: orderReCreatePathRecreateOrder
-      description: Recreate a payment order using an order UUID for the old order
+      description: Recreate a payment order using the order UUID for the old order
       tags:
       - Order
       requestBody:
@@ -409,6 +482,51 @@ paths:
                 $ref: "#/components/schemas/CreateOrderJsonProjectResponse"
         "400":
           description: The error code and message with the error details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseErrorMessage"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseErrorMessage"
+  /api/v1/orders/receipt/{receipt_id}/{order_id}:
+    get:
+      summary: Getting a payment receipt
+      operationId: orderReceiptPathGetReceipt
+      description: Getting a payment receipt data for rendering
+      tags:
+      - Order
+      parameters:
+      - name: receipt_id
+        description: The unique identifier for the receipt
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: order_id
+        description: The unique identifier for the order
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderReceipt"
+        "400":
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseErrorMessage"
+        "404":
+          description: Not found
           content:
             application/json:
               schema:

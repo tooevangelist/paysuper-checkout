@@ -13,7 +13,7 @@ require (
 	github.com/labstack/echo/v4 v4.1.11
 	github.com/micro/go-micro v1.8.0
 	github.com/micro/go-plugins v1.2.0
-	github.com/paysuper/paysuper-billing-server v1.1.1-0.20200109173240-45c8c165ff37
+	github.com/paysuper/paysuper-billing-server v1.1.1-0.20200113075936-9afeed95ad49
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/cobra v0.0.5
 	github.com/stretchr/testify v1.4.0

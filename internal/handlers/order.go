@@ -41,6 +41,7 @@ type CreateOrderJsonProjectResponse struct {
 }
 
 type ReCreateOrderRequest struct {
+	// The unique identifier for the order.
 	Id string `json:"order_id"`
 }
 
