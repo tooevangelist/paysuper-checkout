@@ -248,6 +248,18 @@ func (h *OrderRoute) recreateOrder(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response)
 }
 
+// @summary Change a language
+// @desc Change a language using the order ID
+// @id orderLanguagePathChangeLanguage
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body grpc.PaymentFormUserChangeLangRequest
+// @success 200 {object} billing.PaymentFormDataChangeResponseItem OK
+// @failure 400 {object} grpc.ResponseErrorMessage The error code and message with the error details
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/{order_id}/language [patch]
 func (h *OrderRoute) changeLanguage(ctx echo.Context) error {
 	req := &grpc.PaymentFormUserChangeLangRequest{
 		AcceptLanguage: ctx.Request().Header.Get(common.HeaderAcceptLanguage),
@@ -272,6 +284,18 @@ func (h *OrderRoute) changeLanguage(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res.Item)
 }
 
+// @summary Change a customer
+// @desc Change a customer using the order ID
+// @id orderCustomerPathChangeCustomer
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body grpc.PaymentFormUserChangePaymentAccountRequest
+// @success 200 {object} billing.PaymentFormDataChangeResponseItem OK
+// @failure 400 {object} grpc.ResponseErrorMessage The error code and message with the error details
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/{order_id}/customer [patch]
 func (h *OrderRoute) changeCustomer(ctx echo.Context) error {
 	req := &grpc.PaymentFormUserChangePaymentAccountRequest{
 		AcceptLanguage: ctx.Request().Header.Get(common.HeaderAcceptLanguage),
@@ -296,6 +320,21 @@ func (h *OrderRoute) changeCustomer(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res.Item)
 }
 
+// @summary Change a billing address for the order
+// @desc Change a billing address for the order by the order's unique identifier
+// @id orderBillingAddressPathProcessBillingAddress
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body grpc.ProcessBillingAddressRequest
+// @success 200 {object} grpc.ProcessBillingAddressResponseItem OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 401 {object} grpc.ResponseErrorMessage Unauthorized
+// @failure 403 {object} grpc.ResponseErrorMessage Access denied
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/{order_id}/billing_address [post]
 func (h *OrderRoute) processBillingAddress(ctx echo.Context) error {
 	req := &grpc.ProcessBillingAddressRequest{
 		Cookie: helpers.GetRequestCookie(ctx, common.CustomerTokenCookiesName),
@@ -322,6 +361,19 @@ func (h *OrderRoute) processBillingAddress(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res.Item)
 }
 
+// @summary Subscribe on sales or discounts notifications
+// @desc Subscribe on sales or discounts notifications using the order ID
+// @id orderNotifySalesPathNotifySale
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body grpc.SetUserNotifyRequest
+// @success 200 {string} OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/{order_id}/notify_sale [post]
 func (h *OrderRoute) notifySale(ctx echo.Context) error {
 	req := &grpc.SetUserNotifyRequest{}
 
@@ -338,6 +390,19 @@ func (h *OrderRoute) notifySale(ctx echo.Context) error {
 	return ctx.NoContent(http.StatusNoContent)
 }
 
+// @summary Subscribe on notifications about new regions
+// @desc Subscribe on PaySuper newsletters about an initiation of a payment receiving from new regions
+// @id orderNotifyNewRegionPathNotifyNewRegion
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body grpc.SetUserNotifyRequest
+// @success 200 {string} OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/{order_id}/notify_new_region [post]
 func (h *OrderRoute) notifyNewRegion(ctx echo.Context) error {
 	req := &grpc.SetUserNotifyRequest{}
 
@@ -354,6 +419,19 @@ func (h *OrderRoute) notifyNewRegion(ctx echo.Context) error {
 	return ctx.NoContent(http.StatusNoContent)
 }
 
+// @summary Change an order platform
+// @desc Change an order platform by the order ID
+// @id orderPlatformPathChangePlatform
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @body grpc.PaymentFormUserChangePlatformRequest
+// @success 200 {object} billing.PaymentFormDataChangeResponseItem OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param order_id path {string} true The unique identifier for the order
+// @router /api/v1/orders/{order_id}/platform [post]
 func (h *OrderRoute) changePlatform(ctx echo.Context) error {
 	req := &grpc.PaymentFormUserChangePlatformRequest{}
 
@@ -407,6 +485,18 @@ func (h *OrderRoute) getReceipt(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res.Receipt)
 }
 
+// @summary Create a payment link
+// @desc Create a payment link by a paylink ID
+// @id paylinkIdPathGetOrderForPaylink
+// @tag Order
+// @accept application/json
+// @produce application/json
+// @success 200 {string} OK
+// @failure 400 {object} grpc.ResponseErrorMessage Invalid request data
+// @failure 404 {object} grpc.ResponseErrorMessage Not found
+// @failure 500 {object} grpc.ResponseErrorMessage Internal Server Error
+// @param id path {string} true The unique identifier for the paylink
+// @router /api/v1/paylink/{id} [get]
 func (h *OrderRoute) getOrderForPaylink(ctx echo.Context) error {
 	paylinkId := ctx.Param(common.RequestParameterId)
 
