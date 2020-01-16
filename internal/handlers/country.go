@@ -4,8 +4,7 @@ import (
 	"github.com/ProtocolONE/go-core/v2/pkg/logger"
 	"github.com/ProtocolONE/go-core/v2/pkg/provider"
 	"github.com/labstack/echo/v4"
-	"github.com/paysuper/paysuper-billing-server/pkg"
-	"github.com/paysuper/paysuper-billing-server/pkg/proto/grpc"
+	billing "github.com/paysuper/paysuper-proto/go/billingpb"
 	"github.com/paysuper/paysuper-checkout/internal/dispatcher/common"
 	"net/http"
 )
@@ -34,7 +33,7 @@ func (h *CountryRoute) Route(groups *common.Groups) {
 }
 
 func (h *CountryRoute) getPaymentCountries(ctx echo.Context) error {
-	req := &grpc.GetCountriesListForOrderRequest{}
+	req := &billing.GetCountriesListForOrderRequest{}
 
 	if err := h.dispatch.BindAndValidate(req, ctx); err != nil {
 		return err
@@ -43,7 +42,7 @@ func (h *CountryRoute) getPaymentCountries(ctx echo.Context) error {
 	res, err := h.dispatch.Services.Billing.GetCountriesListForOrder(ctx.Request().Context(), req)
 
 	if err != nil {
-		return h.dispatch.SrvCallHandler(req, err, pkg.ServiceName, "GetCountriesListForOrder")
+		return h.dispatch.SrvCallHandler(req, err, billing.ServiceName, "GetCountriesListForOrder")
 	}
 
 	if res.Status != http.StatusOK {
