@@ -66,13 +66,13 @@ components:
           items:
             type: string
         token:
-          description: "An encrypted string that represents certain details of your customer (such as the user ID, email and others), a game and purchase parameters. The token overrides the corresponding parameters in an order object even the required parameters."
+          description: "An encrypted string that represents certain details of your customer (such as the user ID, email and others), a game and purchase parameters. The token overrides the corresponding parameters (including required parameters) in an order object."
           type: string
         user:
           type: object
           properties:
             external_id:
-              description: "The user unique identifier in the merchant project."
+              description: "The user's unique identifier in the merchant project."
               type: string
             name:
               description: "The user's name."
@@ -111,10 +111,10 @@ components:
                   description: "The user's state code by ISO 3166-2."
                   type: string
         type:
-          description: "The order type. It depends on your sales option (Game Keys, Virtual Items, the simple checkout). For products created as Game Keys use the key type, as Virtual Items - the product type, for a simple checkout - the simple type. Enum values: key, product, simple."
+          description: "The order type. It depends on your sales option (Game Keys, Virtual Items, simple checkout). For products created as Game Keys use the key type, as Virtual Items - the product type, for a simple checkout - the simple type. Enum values: key, product, simple."
           type: string
         platform_id:
-          description: "The default platform's name for which a customer buys a key. This field is used only for the key type. Enum values: steam, gog, uplay, origin, psn, xbox, nintendo, itch, egs."
+          description: "The default platform's name for which the customer buys a key. This field is used only for the key type. Enum values: steam, gog, uplay, origin, psn, xbox, nintendo, itch, egs."
           type: string
     PaymentFormUserChangeLangRequest:
       type: object
@@ -149,13 +149,13 @@ components:
         brand:
           type: string
         country_payments_allowed:
-          description: "Has a true value if the payments are allowed from this user's country."
+          description: "Has a true value if payments are allowed from this user's country."
           type: boolean
         country_change_allowed:
-          description: "Has a true value if a user can select another country in case of the payments are disallowed for his country."
+          description: "Has a true value if a user can select another country if payments are disallowed for his country."
           type: boolean
         has_vat:
-          description: "Has a true value in case of displaying VAT commission in a payment form."
+          description: "Has a true value in case of displaying VAT commission in the payment form."
           type: boolean
         vat:
           description: "The amount of VAT."
@@ -235,13 +235,13 @@ components:
                 description: "The game code."
                 type: string
         charge_currency:
-          description: "A currency of the order charge. It can differ from the order currency because it also depends on a user's card currency."
+          description: "The currency of the order charge. It can differ from the order currency because it depends on the user's card currency."
           type: string
         charge_amount:
-          description: "A total amount of the order charge."
+          description: "The total amount of the order."
           type: number
         vat_in_charge_currency:
-          description: "VAT currency of the order charge. It can differ from the order currency because it also depends on a user's card currency."
+          description: "VAT currency of the order charge. It can differ from the order currency because it depends on the user's card currency."
           type: number
         vat_rate:
           description: "VAT rate."
@@ -255,7 +255,7 @@ components:
           description: "The order UUID."
           type: string
         enable_notification:
-          description: "Has a true value if a user confirmed to receive notifications."
+          description: "Has a true value if the user has confirmed to receive notifications."
           type: boolean
         email:
           description: "The customer's email for notifications."
@@ -270,7 +270,7 @@ components:
           description: "The unique identifier for the transaction."
           type: string
         transaction_date:
-          description: "A transaction date."
+          description: "The transaction date."
           type: string
         project_name:
           description: "The project's name."
@@ -328,7 +328,7 @@ components:
           description: "The redirection URL."
           type: string
         need_redirect:
-          description: "Has a true value if it's need to perform redirection by link."
+          description: "Has a true value if it needs to redirect by a link."
           type: boolean
     CountriesList:
       type: object
@@ -338,7 +338,7 @@ components:
           items:
             properties:
               iso_code_a2:
-                description: "Two-letter country code by ISO 3166, in uppercase (for instance\" U\")."
+                description: "Two-letter country code in ISO 3166, in uppercase (for instance\" U\")."
                 type: string
               region:
                 description: "A PaySuper system's relative geographical area for this country."
@@ -347,10 +347,10 @@ components:
                 description: "The currency of the country. Three-letter Currency Code ISO 4217, in uppercase."
                 type: string
               payments_allowed:
-                description: "Has a true value if a payment is allowed from this country."
+                description: "Has a true value if the payment is allowed from this country."
                 type: boolean
               change_allowed:
-                description: "Has a true value if a user can select another country in case of the payments are disallowed for this country."
+                description: "Has a true value if the user can select another country while the payments are disallowed for this country."
                 type: boolean
               vat_enabled:
                 description: "Has a true value if VAT is calculated and paid for this country."
@@ -371,28 +371,28 @@ components:
                     description: "The maximum value of the PaySuper's worldwide revenue (since the beginning of the year) which subjects to VAT."
                     type: number
               vat_period_month:
-                description: "The length of a tax period in months."
+                description: "The length of the taxation period in months."
                 type: integer
               vat_deadline_days:
-                description: "The number of days after a tax period end to pay VAT."
+                description: "The number of days after the taxation period end to pay VAT."
                 type: integer
               vat_store_years:
                 description: "The number of years to store the VAT payment history for this country."
                 type: integer
               vat_currency_rates_policy:
-                description: "A calculation policy of VAT with a currency that differs from this country VAT currency. Available values: on-day (a conversion rate on the day of payment), last-day (a conversion rate on the last day of a tax period), mid-month (the system reserved option of a conversion rate calculation. This option is disabled.)."
+                description: "The calculation policy of VAT with a currency that differs from this country VAT currency. Available values: on-day (the conversion rate on the day of payment), last-day (the conversion rate on the last day of a tax period), mid-month (the system reserved option of a conversion rate calculation. This option is disabled.)."
                 type: string
               vat_currency_rates_source:
-                description: "The source of currency rates to calculate a tax amount."
+                description: "The source of currency rates to calculate the tax amount."
                 type: string
               payer_tariff_region:
                 description: "A PaySuper system's relative geographical area for this country. Available values: asia, europe, latin_america, russia_and_cis, worldwide."
                 type: string
               high_risk_payments_allowed:
-                description: "Has a true value if payments from this country is allowed. Has a false value for a high-risk merchant."
+                description: "Has a true value if payments from this country are allowed. Has a false value for a high-risk merchant."
                 type: boolean
               high_risk_change_allowed:
-                description: "Has a true value if a user can select another country in case of the payments are disallowed for a country determined by a customer's IP address."
+                description: "Has a true value if a user can select another country while the payments are disallowed for a country determined by the customer's IP address."
                 type: boolean
     ResponseErrorMessage:
       type: object
@@ -422,13 +422,13 @@ components:
       type: object
       properties:
         id:
-          description: "The unique identifier for an order."
+          description: "The unique identifier for the order."
           type: string
         account:
           description: "The user's unique account in the merchant project. The value can be null."
           type: string
         has_vat:
-          description: "Has a true value in case of displaying VAT commission in a payment form."
+          description: "Has a true value in case of displaying a VAT commission in a payment form."
           type: boolean
         vat:
           description: "The amount of VAT."
@@ -449,10 +449,10 @@ components:
               description: "The project's name."
               type: string
             url_success:
-              description: "The redirect URL for a successful payment. Has the null value if the dynamic notify URLs option is not set in the Project Settings."
+              description: "The redirect URL for a successful payment. Has a null value if the dynamic notify URLs option is not set in the Project Settings."
               type: string
             url_fail:
-              description: "The redirect URL for a failed payment. Has the null value if the dynamic notify URLs option is not set in the Project Settings."
+              description: "The redirect URL for a failed payment. Has a null value if the dynamic notify URLs option is not set in the Project Settings."
               type: string
             id:
               description: "The unique identifier for the project."
@@ -553,7 +553,7 @@ components:
                 description: "The item's price currency. Three-letter Currency Code ISO 4217, in uppercase."
                 type: string
               images:
-                description: "A list of the item's images URLs."
+                description: "The list of the item's images URLs."
                 type: array
                 items:
                   type: string
@@ -585,7 +585,7 @@ components:
                 description: "The game code."
                 type: string
         email:
-          description: "A user's email."
+          description: "The user's email."
           type: string
         description:
           description: "An order description."
@@ -594,7 +594,7 @@ components:
           description: "Has a true value if the payments are allowed from this user's country."
           type: boolean
         country_change_allowed:
-          description: "Has a true value if a user can select another country in case of the payments are disallowed for his country."
+          description: "Has a true value if a user can select another country while the payments are disallowed for his country."
           type: boolean
         platforms:
           type: array
@@ -609,7 +609,7 @@ components:
                 description: "The platform's name. Available values: steam, gog, uplay, origin, psn, xbox, nintendo, itch, egs."
                 type: string
         lang:
-          description: "A language predefined by a merchant project for a payment form."
+          description: "The language predefined in a merchant project for a payment form."
           type: string
         is_already_processed:
           description: "Has a true value if the order has already been processed."
@@ -721,12 +721,12 @@ components:
                 description: "The item's price currency. Three-letter Currency Code ISO 4217, in uppercase."
                 type: string
               images:
-                description: "A list of the item's images URLs."
+                description: "The item's images URL list."
                 type: array
                 items:
                   type: string
               url:
-                description: "The item's URL in a merchant project."
+                description: "The item's URL in the merchant project."
                 type: string
               created_at:
                 type: object
@@ -753,16 +753,16 @@ components:
                 description: "The game code."
                 type: string
         charge_currency:
-          description: "A currency of the order charge. It can differ from the order currency because it also depends on a user's card currency."
+          description: "The currency of the order charge. It can differ from the order currency because it depends on the user's card currency."
           type: string
         charge_amount:
-          description: "A total amount of the order charge."
+          description: "The total amount of the order charge."
           type: number
         vat_in_charge_currency:
-          description: "VAT currency of the order charge. It can differ from the order currency because it also depends on a user's card currency."
+          description: "The VAT currency of the order charge. It can differ from the order currency because it depends on the user's card currency."
           type: number
         country_change_allowed:
-          description: "Has a true value if a user can select another country in case of the payments are disallowed for his country."
+          description: "Has a true value if a user can select another country while the payments are disallowed for his country."
           type: boolean
         vat_rate:
           description: "VAT rate."
@@ -827,7 +827,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/CreateOrderJsonProjectResponse"
         "400":
-          description: The error code and message with the error details
+          description: The error code and message with error details
           content:
             application/json:
               schema:
@@ -840,9 +840,9 @@ paths:
                 $ref: "#/components/schemas/ResponseErrorMessage"
   /api/v1/order/{order_id}:
     get:
-      summary: Get an order data
+      summary: Get the order data
       operationId: orderIdPathGetPaymentFormData
-      description: Get an order data for rendering a payment form
+      description: Get the order data to render a payment form
       tags:
       - Order
       parameters:
@@ -897,7 +897,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/CreateOrderJsonProjectResponse"
         "400":
-          description: The error code and message with the error details
+          description: The error code and the message with error details
           content:
             application/json:
               schema:
@@ -910,9 +910,9 @@ paths:
                 $ref: "#/components/schemas/ResponseErrorMessage"
   /api/v1/orders/{order_id}/language:
     patch:
-      summary: Change a language
+      summary: Change the language
       operationId: orderLanguagePathChangeLanguage
-      description: Change a language using the order ID
+      description: Change the language using the order ID
       tags:
       - Order
       parameters:
@@ -935,7 +935,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/PaymentFormDataChangeResponseItem"
         "400":
-          description: The error code and message with the error details
+          description: The error code and the message with error details
           content:
             application/json:
               schema:
@@ -973,7 +973,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/PaymentFormDataChangeResponseItem"
         "400":
-          description: The error code and message with the error details
+          description: The error code and the message with error details
           content:
             application/json:
               schema:
@@ -986,9 +986,9 @@ paths:
                 $ref: "#/components/schemas/ResponseErrorMessage"
   /api/v1/orders/{order_id}/billing_address:
     post:
-      summary: Change a billing address for the order
+      summary: Change the billing address for the order
       operationId: orderBillingAddressPathProcessBillingAddress
-      description: "Change a billing address for the order by the order's unique identifier"
+      description: "Change the billing address for the order using the order's unique identifier"
       tags:
       - Order
       parameters:
@@ -1042,9 +1042,9 @@ paths:
                 $ref: "#/components/schemas/ResponseErrorMessage"
   /api/v1/orders/{order_id}/notify_sale:
     post:
-      summary: Subscribe on sales or discounts notifications
+      summary: Subscribe to sales and discounts notifications
       operationId: orderNotifySalesPathNotifySale
-      description: Subscribe on sales or discounts notifications using the order ID
+      description: Subscribe to sales and discounts notifications using the order ID
       tags:
       - Order
       parameters:
@@ -1086,9 +1086,9 @@ paths:
                 $ref: "#/components/schemas/ResponseErrorMessage"
   /api/v1/orders/{order_id}/notify_new_region:
     post:
-      summary: Subscribe on notifications about new regions
+      summary: Subscribe to notifications about new regions
       operationId: orderNotifyNewRegionPathNotifyNewRegion
-      description: Subscribe on PaySuper newsletters about an initiation of a payment receiving from new regions
+      description: Get an email notification when a new region becomes available at PaySuper to receive payments
       tags:
       - Order
       parameters:
@@ -1260,7 +1260,7 @@ paths:
     post:
       summary: Get a redirect URL
       operationId: paymentPathProcessCreatePayment
-      description: Get a redirect URL after a processed payment
+      description: Get a redirect URL after the processed payment
       tags:
       - Payment
       responses:
